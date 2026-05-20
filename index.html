@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Julia • 16 Anos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      height:100vh;
+      overflow:hidden;
+      background:#f5c4d7;
+      color:white;
+    }
+
+    .page{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100vh;
+      transition:0.7s ease;
+    }
+
+    /* PRIMEIRA TELA */
+
+.home{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:25px;
+
+  background-image:
+  linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+  url('https://img.freepik.com/fotos-premium/feliz-aniversario-fundo-rosa-com-baloes-de-luxo-e-confetes_280388-1080.jpg');
+
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+
+  background-color:#f5c4d7;
+
+  z-index:3;
+}
+
+    .home.hidden{
+      transform:translateY(-100%);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      backdrop-filter:blur(3px);
+      background:rgba(255,255,255,0.05);
+    }
+
+    .home-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .small-text{
+      letter-spacing:4px;
+      font-size:13px;
+      margin-bottom:14px;
+    }
+
+    h1{
+      font-size:55px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .subtitle{
+      font-size:18px;
+      font-weight:300;
+      margin-bottom:40px;
+    }
+
+    .open-btn{
+      border:none;
+      background:white;
+      color:#d36d96;
+      padding:16px 40px;
+      border-radius:50px;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .open-btn:hover{
+      transform:scale(1.05);
+    }
+
+    /* PÁGINAS */
+
+    .invite,
+    .gifts{
+      background:
+      linear-gradient(180deg,#f7d4e1,#efabc7);
+
+      padding:25px;
+      overflow-y:auto;
+
+      transform:translateY(100%);
+      opacity:0;
+      z-index:1;
+    }
+
+    .invite.active,
+    .gifts.active{
+      transform:translateY(0%);
+      opacity:1;
+      z-index:2;
+    }
+
+    .card{
+      max-width:430px;
+      margin:20px auto;
+
+      background:rgba(255,255,255,0.18);
+
+      border:1px solid rgba(255,255,255,0.25);
+
+      backdrop-filter:blur(12px);
+
+      border-radius:30px;
+
+      padding:30px;
+
+      box-shadow:0 15px 40px rgba(0,0,0,0.12);
+    }
+
+    .title{
+      text-align:center;
+      margin-bottom:25px;
+    }
+
+    .title h2{
+      font-size:45px;
+      margin-bottom:5px;
+    }
+
+    .title p{
+      font-size:16px;
+      opacity:0.95;
+    }
+
+    .info{
+      margin-top:25px;
+    }
+
+    .info-item{
+      background:rgba(255,255,255,0.16);
+      padding:16px;
+      border-radius:18px;
+      margin-bottom:16px;
+    }
+
+    .label{
+      font-size:12px;
+      letter-spacing:2px;
+      margin-bottom:6px;
+      opacity:0.85;
+    }
+
+    .value{
+      font-size:18px;
+      font-weight:600;
+    }
+
+    .buttons{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      margin-top:28px;
+    }
+
+    .action-btn{
+      text-decoration:none;
+      background:white;
+      color:#d36d96;
+      text-align:center;
+      padding:15px;
+      border-radius:18px;
+      font-weight:600;
+      transition:0.3s;
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+      border:none;
+      cursor:pointer;
+    }
+
+    .action-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .gift-list{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+      margin-top:25px;
+    }
+
+    .gift-item{
+      background:rgba(255,255,255,0.16);
+      padding:18px;
+      border-radius:18px;
+      line-height:1.6;
+    }
+
+    .pix{
+      margin-top:20px;
+      text-align:center;
+      background:white;
+      color:#d36d96;
+      padding:18px;
+      border-radius:18px;
+      font-weight:700;
+      font-size:18px;
+    }
+
+    .back-btn{
+      margin-top:20px;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:25px;
+      font-size:13px;
+      opacity:0.9;
+    }
+
+    @media(max-width:390px){
+
+      h1{
+        font-size:44px;
+      }
+
+      .title h2{
+        font-size:38px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- TELA INICIAL -->
+
+  <section class="page home" id="home">
+
+    <div class="overlay"></div>
+
+    <div class="home-content">
+
+      <p class="small-text">
+        VOCÊ FOI CONVIDADO
+      </p>
+
+      <h1>Julia</h1>
+
+      <p class="subtitle">
+        16 anos • Pool Party
+      </p>
+
+      <button class="open-btn" onclick="openInvite()">
+        ABRIR CONVITE
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- CONVITE -->
+
+  <section class="page invite" id="invite">
+
+    <div class="card">
+
+      <div class="title">
+        <h2>Julia</h2>
+
+        <p>
+          Venha celebrar meus 16 anos ✨
+        </p>
+      </div>
+
+      <div class="info">
+
+        <div class="info-item">
+          <div class="label">DATA</div>
+
+          <div class="value">
+            Sábado, 06 de Junho
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="label">HORÁRIO</div>
+
+          <div class="value">
+            18h30
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="label">LOCAL</div>
+
+          <div class="value">
+            Festa na Piscina 🌴
+          </div>
+        </div>
+
+      </div>
+
+      <div class="buttons">
+
+        <a
+          class="action-btn"
+          href="https://wa.link/873p6r"
+          target="_blank"
+        >
+          CONFIRMAR PRESENÇA
+        </a>
+
+        <a
+          class="action-btn"
+          href="https://www.google.com/maps/place/Espa%C3%A7o+El-shaday/@-3.1111637,-60.0865,12z/data=!4m10!1m2!2m1!1sespa%C3%A7o+el+shaday!3m6!1s0x926c1d0054d1ec45:0x16f5662ce269d03e!8m2!3d-3.0880659!4d-59.8832914!15sChFlc3Bhw6dvIGVsIHNoYWRheZIBC2V2ZW50X3ZlbnVl4AEA!16s%2Fg%2F11yqczfjhs?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
+          target="_blank"
+        >
+          LOCALIZAÇÃO
+        </a>
+
+        <button
+          class="action-btn"
+          onclick="openGifts()"
+        >
+          IDEIAS DE PRESENTES
+        </button>
+
+      </div>
+
+      <div class="footer">
+        Esperamos você para uma noite especial 💖
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- TELA PRESENTES -->
+
+  <section class="page gifts" id="gifts">
+
+    <div class="card">
+
+      <div class="title">
+
+        <h2>Presentes 🎁</h2>
+
+        <p>
+          Algumas ideias caso queira me presentear 💖
+        </p>
+
+      </div>
+
+      <div class="gift-list">
+
+        <div class="gift-item">
+          ✨ Cosméticos para cabelo ou corpo<br>
+          O Boticário, Eudora ou Natura
+        </div>
+
+        <div class="gift-item">
+          👠 Calçados tamanho 37
+        </div>
+
+        <div class="gift-item">
+          💍 Jóias douradas
+        </div>
+
+      </div>
+
+      <div class="pix">
+        PIX: 92984195101
+      </div>
+
+      <button
+        class="action-btn back-btn"
+        onclick="backInvite()"
+      >
+        VOLTAR
+      </button>
+
+    </div>
+
+  </section>
+
+  <script>
+
+    function openInvite(){
+
+      const home = document.getElementById("home");
+      const invite = document.getElementById("invite");
+
+      home.classList.add("hidden");
+
+      invite.classList.add("active");
+
+    }
+
+    function openGifts(){
+
+      const gifts = document.getElementById("gifts");
+
+      gifts.classList.add("active");
+
+    }
+
+    function backInvite(){
+
+      const gifts = document.getElementById("gifts");
+
+      gifts.classList.remove("active");
+
+    }
+
+  </script>
+
+</body>
+</html>
